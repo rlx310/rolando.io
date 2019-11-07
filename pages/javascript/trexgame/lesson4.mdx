@@ -1,0 +1,202 @@
+import Layout from '../../../components/Layout/MDXLayout'
+
+# T-Rex Game
+
+##### Lesson #4
+
+---
+
+### Table of contents
+
+1. [Pausing](#pausing)
+2. [Collisions](#collision)
+3. [Obstacale Types](#types)
+
+<h3 id="pausing">Pausing</h3>
+
+Now to really wrap up our game, we want to actually calculate whether or not
+our player and our obstacles overlap. When they do, the game should stop.
+We need to set this up first by making our program aware if the game is
+paused or not. So lets add a **paused** variable to our game.
+
+```js {5}
+// globals
+const canvasWidth = 600
+const canvasHeight = 200
+let frequency = 0.5
+let paused = false
+```
+
+And make use of the paused variable in our **draw**.
+
+```js {2}
+function draw() {
+  if (paused) return
+  background('#333')
+  drawDino()
+  drawHorizon()
+  handleLevel(frameCount)
+  handleObstacles()
+}
+```
+
+The if statement above will stop the game from drawing and updating the positions
+of our game objects if the game is paused. Lets also make it so that our game can
+pause when the **p** key is pressed by updating our keyPressed function.
+
+```js {6-13}
+function keyPressed() {
+  if ((keyCode === 38 || keyCode === 32) && dino.onGround) {
+    dino.jump()
+  }
+
+  if (keyCode === 80) {
+    if (paused === true) {
+      paused = false
+    } else {
+      paused = true
+    }
+  }
+}
+```
+
+<h3 id="collisions">Collisions</h3>
+
+We need a way to check if two game objects are overlapping. To do this, lets
+create an overlap function.
+
+```js
+function overlap(rect1, rect2) {
+  if (
+    rect1.x < rect2.x + rect2.width &&
+    rect1.x + rect1.width > rect2.x &&
+    rect1.y < rect2.y + rect2.height &&
+    rect1.y + rect1.height > rect2.y
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+```
+
+The logic here is a little tricky to understand at first. It compares the boundaries
+of two rectangles, and checks if they're overlapping. If they are it returns true,
+otherwise it returns false. This method of checking overlap is called [AABB collision
+detection](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection).
+
+We now need to apply our collision detection. One good place to do this is in the **update**
+function of our obstacle.
+
+```js {5-9}
+ update() {
+    this.onScreen = (this.x > -this.width)
+    this.x -= this.speed
+
+    const collision = overlap(dino, this)
+
+    if (collision) {
+      paused = true
+    }
+  }
+```
+
+<h3 is="types">Obstacle Types</h3>
+
+Lets wrap up this lesson by allowing for the creation of multiple object types. Lets create
+a config object under **Obstacle** class to setup up the different type of obstacles we want to spawn.
+
+```js
+const obstacleTypes = [
+  { color: 'red', width: 50, height: 50 },
+  { color: 'yellow', width: 30, height: 50 },
+  { color: 'green', width: 30, height: 30 }
+]
+```
+
+Now, in the createObstacle function, lets make it so that it we pick a random obstacle type
+before we create the new obstacle. We also need to randomly pick which type of obstacle we want.
+
+```js {2-5}
+function createObstacle() {
+  const hardRandom = random()
+  const typeIndex = Math.floor(hardRandom * 3)
+  const type = obstacleTypes[typeIndex]
+  obstacles.push(
+    new Obstacle(canvasWidth, type.width, type.height, type.color, 5)
+  )
+}
+```
+
+<h3 id="gameover">Game Over</h3>
+
+Lets wrap up by adding game over logic to our game. Lets add yet another global.
+
+```js {6}
+// globals
+const canvasWidth = 600
+const canvasHeight = 200
+let frequency = 0.5
+let paused = false
+let gameover = false
+```
+
+This global needs to be used in our draw.
+
+```js {2-5}
+function draw() {
+  if (gameover) {
+    drawGameover()
+    return
+  }
+
+  if (paused) return
+
+  background('#333')
+  drawDino()
+  drawHorizon()
+  handleLevel(frameCount)
+  handleObstacles()
+}
+```
+
+The code above will only render the game over screen when our game is over,
+otherwise it will draw the full game. We also need to actually set our game
+to be over when we register a collision in the update function of our **Obstacle** class.
+
+```js {8}
+  update() {
+    this.onScreen = (this.x > -this.width)
+    this.x -= this.speed
+
+    const collision = overlap(dino, this)
+
+    if (collision) {
+      gameover = true
+    }
+  }
+```
+
+We also need to tell our game what to draw when the game is over.
+So we'll need to define our **drawGameover** function.
+
+```js
+function drawGameover() {
+  background('#f')
+  textSize(32)
+  fill('#fff')
+  textAlign(CENTER)
+  text('Game Over', canvasWidth / 2, canvasHeight / 2)
+  textSize(20)
+  text('Press space to try again', canvasWidth / 2, canvasHeight / 2 + 40)
+}
+```
+
+export default ({ children }) => (
+  <Layout
+    prev="/javascript/trexgame/lesson3"
+    next="/javascript/trexgame/lesson5"
+  >
+    {children}
+  </Layout>
+)

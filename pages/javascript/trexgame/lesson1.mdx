@@ -1,0 +1,69 @@
+import Layout from '../../../components/Layout/MDXLayout'
+
+# T-Rex Game
+
+##### Lesson #1
+
+---
+
+### Table of contents
+
+1. [Intro](#intro)
+2. [Setup](#setup)
+3. [First Steps](#first-steps)
+
+<h3 id="intro">Intro</h3>
+
+In 2014, the Google Chrome dev team released T-Rex Jump as a hidden easter egg.
+If a user's computer couldn't connect to the internet, a message with a little
+dino would pop up. Pressing space would initialize the game, where players
+had to make the dino jump over incoming obstacles, mainly cacti and pterodactyls.
+
+![T-Rex Game Gif](/static/pages/javascript/trexgame/trexgame.gif)
+
+<figure>The infamous dino in action!</figure>
+
+In this tutorial, we'll try to build this well known game using the p5.js drawing
+library. It's simple API will allow us to build the game quickly without having
+to worry about the quirks of the HTML5 canvas 2D renderer.
+
+<h3 id="setup">Setup</h3>
+
+Lets start by clicking [HERE](https://repl.it/@rlx310/P5-Boilerplate)
+to open our starter project. You'll want to click the Fork button to
+make a copy of the project that you can edit yourself. Refresh after
+you fork so that the preview window syncs up with your version of the
+project. Feel free to sign-in/sign-up as well!
+
+![Clicking the sketch.js file](/static/pages/javascript/trexgame/sketch-js.png)
+
+<figure>
+  We'll want to open the sketch.js file since that's where we're going to be
+  writting all of our code.
+</figure>
+
+<h3 id="first-steps">First Steps</h3>
+
+Lets quickly make sure that all the files in our project are working properlly.
+Lets add some code to our **setup** and **draw** functions.
+
+```js
+function setup() {
+  createCanvas(canvasWidth, canvasHeight)
+}
+
+function draw() {
+  background('#333')
+}
+```
+
+The code above should draw a grey background onto your screen. Feel free to
+modify the color using a HEX color from a [color picker](https://www.google.com/search?q=color+picker).
+
+![Grey screen](/static/pages/javascript/trexgame/grey-screen.png)
+
+Once you've picked your color, we should be good to move onto drawing our player!
+
+export default ({ children }) => (
+  <Layout next="/javascript/trexgame/lesson2">{children}</Layout>
+)

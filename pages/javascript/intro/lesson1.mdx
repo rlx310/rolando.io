@@ -1,0 +1,123 @@
+import Layout from '../../../components/Layout/MDXLayout'
+
+# JavaScript for Beginners
+
+##### Lesson #1
+
+---
+
+### Table of contents
+
+1. [Why programming languages matter?](#why)
+2. [What is JavaScript](#history)
+3. [ECMAScript?](#ecmascript)
+
+<h3 id="why">Why programming languages matter?</h3>
+
+Before we start learning JavaScript, we need to understand why we should be
+using programming languages in the first place. It is well known that
+computers understand **binary** code, similar to the code below:
+
+```bin
+00110001 00000000 00000000
+00110001 00000001 00000001
+00110011 00000001 00000010
+01010001 00001011 00000010
+00100010 00000010 00001000
+01000011 00000001 00000000
+01000001 00000001 00000001
+00010000 00000010 00000000
+01100010 00000000 00000000
+```
+
+The first computers actually would represent these binary values using
+thousands of tiny lightbulbs with "0" representing the light being off, and
+"1" representing the light being on. Improvements in technology has made it so
+that we can store and calculate trillions of these zeros and ones within
+seconds.
+
+Having a human interact with all those binary numbers is extremely tedious,
+time consuming, and error prone. So instead of working directly with the 0's
+and 1's, we write instructions for computers using **programing languages**.
+
+So instead of working with the following binary values:
+
+```bin
+00001101
+10001100101000
+01100100 01101111 01100111
+01100011 01100001 01110100
+```
+
+We can write them in JavaScript as:
+
+```bin
+13
+9000
+"dog"
+"cat"
+```
+
+<h3 id="history">What is JavaScript?</h3>
+
+JavaScript was created by a company called Netscape back in 1995. It was
+originally called _LiveScript_, but the name was later changed to _JavaScript_
+to capitalize on the popularity of the quickly growing _Java_ programming
+language. This marketing tactic has caused a lot of confusion throughout the
+years, leading many to believe that the two languages are related when in
+fact, they are not.
+
+JavaScript is primarily used to implement complex behavior on web pages, and
+has gone from being a language used to build simple widgets and interactivity
+on web pages, to being the foundation of complex and high traffic web
+applications such as Google Maps, Amazon, and Netflix. Along with that, many
+tools have been built in recent years to allow JavaScript to be used to
+program mobile applications, desktop applications, and even small robots!
+
+![Sphero RVR robot](/static/pages/javascript/intro/spheroRVR.gif)
+
+<figure>
+  The Sphero RVR, a modular and extensible rover car that is programable with
+  JS.
+</figure>
+
+![Discord Application Demo](/static/pages/javascript/intro/discord.gif)
+
+<figure>
+  Discord, a chat application that can be used directly in a web browser, or
+  installed directly onto desktops and phones. All versions are built with
+  JavaScript.
+</figure>
+
+<h3 id="ecmascript">ECMAScript?</h3>
+
+When it was first released, JavaScript wasn't the only scripting language used
+in web browsers. Many browsers competed with each other to become the one
+browser to rule them all, in an era known as the browser wars. Along with this
+came different scriting languages with varying syntax and rules.
+
+This required developers to either write separate versions of their
+applications for each different browser, or to pick only one or two browsers
+to run their apps. This lead to a horrible developer and user experience, thus the
+creation of _ECMAScript language specification_.
+
+Created by European Computer Manufacturers Association (ECMA), the ECMAScript
+language specification was used to standardize the languages browsers used.
+JavaScript was used as the basis of this specification, and this eventually
+led to the wide adoption of JavaScript in pretty much all web browsers. ECMA
+also releases newer versions of ECMAScript regularly. ES5 is mostly used to refer
+to versions of the language released before 2015, and ES6 is generally used for
+versions after 2015.
+
+In short, anytime you hear _ECMAScript_, JavaScript, ES, or JS, they all
+refer to the same language.
+
+#### Summary
+
+- Programming languages let us give computers instructions in a human-readable way
+- JavaScript is the most widely used language, and has been adpoted on platforms outside of just web browsers
+- ECMAScript is the formal name of the JavaScript language, and is being constantly updated by the people at ECMA.
+
+export default ({ children }) => (
+  <Layout next="/javascript/intro/lesson2">{children}</Layout>
+)

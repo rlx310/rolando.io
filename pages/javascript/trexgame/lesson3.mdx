@@ -1,0 +1,284 @@
+import Layout from '../../../components/Layout/MDXLayout'
+
+# T-Rex Game
+
+##### Lesson #3
+
+---
+
+### Table of contents
+
+1. [Obstacles Class](#class)
+2. [Spawining Multiple Obstacles](#multiple)
+3. [GameOver](#gameover)
+
+<h3 id="class">Obstacles Class</h3>
+
+We were able to get away with using plain objects for our dino and our horizon
+because only one of them exist at a time. But we need to be able to generate
+mulitiple obstacles. We'll be using **classes** in JavaScript to create a
+template for our obstacles. Write this near your globals, ideally under your
+dino object.
+
+```js
+class Obstacle {
+  constructor(x, width, height, color, speed) {
+    this.x = x
+    this.y = horizon.y - height
+    this.width = width
+    this.height = height
+    this.color = color
+    this.speed = speed
+    this.onScreen = true
+  }
+}
+```
+
+Like our dino, we'll want it to line up with the horizon. We also want to
+be able to customize the width, height, and color to be able to create
+differnt types of obstacles later on.
+
+Now we need to be able to draw our obstacle
+onto our screen, so lets add a **draw** method directly to our class.
+
+```js {12-17}
+class Obstacle {
+  constructor(x, width, height, color, speed) {
+    this.x = x
+    this.y = horizon.y - height
+    this.width = width
+    this.height = height
+    this.color = color
+    this.speed = speed
+    this.onScreen = true
+  }
+
+  draw() {
+    fill(this.color)
+    stroke('#fff')
+    strokeWeight(2)
+    rect(this.x, this.y, this.width, this.height)
+  }
+}
+```
+
+This is honeslty much more organized than our other objects, since
+we're encapsulating the functionality of our obstacles in our class
+as well. Feel free to update you game so that your **drawDino**
+and **drawHorizon** are also saved as methods for our
+**dino** and **horizon** objects.
+
+For now though, we'll move on to finally drawing an obstacle. Since we
+plan on having multiple obstacles, lets create an array after our **Obstacle**
+class to help us keep a list of these obstacles.
+
+```js
+// list of obstacles
+let obstacles = []
+```
+
+Then, in our **setup** function, lets add a new obstacle to this list.
+
+```js {3}
+function setup() {
+  createCanvas(canvasWidth, canvasHeight)
+  obstacles.push(new Obstacle(500, 50, 50, 'red', 5))
+}
+```
+
+And finally, in our **update**, lets actually draw the obstacle
+
+```js {5}
+function draw() {
+  background('#333')
+  drawDino()
+  drawHorizon()
+  obstacles[0].draw()
+}
+```
+
+You should now see this on your screen.
+
+![Game with obstacle](/static/pages/javascript/trexgame/hello-obstacle.png)
+
+Now that our obstacle has shown up, lets get it to move! We'll need to go back
+to our **Obstacle** class and add an **update** method.
+
+```js {19-28}
+class Obstacle {
+  constructor(x, width, height, color, speed) {
+    this.x = x
+    this.y = horizon.y - height
+    this.width = width
+    this.height = height
+    this.color = color
+    this.speed = speed
+    this.onScreen = true
+  }
+
+  draw() {
+    fill(this.color)
+    stroke('#fff')
+    strokeWeight(2)
+    rect(this.x, this.y, this.width, this.height)
+  }
+
+  update() {
+    this.onScreen = this.x > -this.width
+    this.x -= this.speed
+  }
+}
+```
+
+We kill two birds with one stone here by updating the **x** position
+of our obstacle, and checking if its still on the screen so we can
+remove it later to save memory.
+
+Lets now make another update to our draw function so that it starts
+moving the obstacle
+
+```js {6}
+function draw() {
+  background('#333')
+  drawDino()
+  drawHorizon()
+  obstacles[0].draw()
+  obstacles[0].update()
+}
+```
+
+![Game with moving obstacle](/static/pages/javascript/trexgame/moving-obstacle.gif)
+
+<h3 id="multuiple">Multuple Obstacles</h3>
+
+We have one obstacle spawning, now lets make it so that mupltiple spawn! Lets populate
+our obstacle array with a few more obstacles.
+
+```js {3}
+function setup() {
+  createCanvas(canvasWidth, canvasHeight)
+  obstacles.push(
+    new Obstacle(500, 50, 50, 'red', 5),
+    new Obstacle(1000, 50, 50, 'yellow', 5)
+  )
+}
+```
+
+Right now, our game only tries to draw the first obstacle, so lets fix that
+by creating a function that loops through all our obstacles and draws them!
+Create the **handleObstacles** function lets use it to loop through our obstacles.
+
+```js
+function handleObstacles() {
+  for (let i = obstacles.length - 1; i >= 0; i -= 1) {
+    let obstacle = obstacles[i]
+
+    obstacle.update()
+    obstacle.draw()
+
+    if (!obstacle.onScreen) {
+      obstacles.splice(i, 1)
+    }
+  }
+}
+```
+
+Our function uses a traditional for loop to go through all our obstacles
+and draw them, except it loops backwards. This is because our new obstacles
+are getting added to the end of the array, and get removed from the beginning
+of the array. During a frame that removes an obstacle, if we looped from the
+beginning, we would end up skipping one of our obstacles for one frame, which
+is a subtle but noticable glitch.
+
+Now we need to update our draw function to actually use **handleObstacles**
+
+```js {5}
+function draw() {
+  background('#333')
+  drawDino()
+  drawHorizon()
+  handleObstacles()
+}
+```
+
+Multuple obstacles should be spawning now. This is great. Lets take it further
+by dynamically spawning more obstacles. Lets start by making the **createObstacles**
+function, which will create a new obstacle and add it to our list of obstacles.
+We'll also need to create a function that periodically spawns a new obstacle. Lets
+call this **handleLevel**.
+
+```js
+function createObstacle() {
+  obstacles.push(new Obstacle(canvasWidth, 50, 50, 'red', 5))
+}
+
+function handleLevel(frameCount) {
+  const interval = 45
+  if (frameCount % interval === 0) {
+    let smoothRandom = noise(frameCount)
+
+    if (smoothRandom < frequency) {
+      createObstacle()
+    }
+  }
+}
+```
+
+In the **handleLevel** function, we set a timing interval that correlates to how many
+frames we want to occur before we to try spawning a new obstacle. In the code above,
+we set it so that our obstales spawn every 45 frames. Since our games will most likely
+run at 60 frames per second, our obstacles will spawn every 0.75 seconds.
+
+**SmoothRandom** generates a random number between 0 and 1 (so a decimal), similar to how JavaScript
+normally handles random numbers, except it uses the **noise** function. Noise limits
+how far random numbers are from each other, causing a smoother and more natural transition
+between random numbers. It makes it so that our game will spawn our obstacles in bursts, as
+opossed to abritrarily.
+
+We check our random number against our **frequency** which we should set with our globals.
+Frequency lets us set a threshold between 0 and 1 that decides whether or not our new
+obstacle should spawn. Lets set that variable now at the top of our code.
+
+```js {4}
+// globals
+const canvasWidth = 600
+const canvasHeight = 200
+let frequency = 0.5
+```
+
+Last but not least, we need to run the **handleLevel** function in our **draw**.
+
+```js {5}
+function draw() {
+  background('#333')
+  drawDino()
+  drawHorizon()
+  handleLevel(frameCount)
+  handleObstacles()
+}
+```
+
+Once we've confirmed that we have obstacles spawning periodically. We can remove
+the obstacles that we manually created in our **setup**.
+
+```js {3-6}
+function setup() {
+  createCanvas(canvasWidth, canvasHeight)
+  // obstacles.push(
+  //   new Obstacle(500, 50, 50, 'red', 5),
+  //   new Obstacle(1000, 50, 50, 'yellow', 5)
+  // )
+}
+```
+
+And with that, we are ready to move on to the next lesson where we will
+make have different types of obstacles, and add a Game Over screen.
+
+export default ({ children }) => (
+  <Layout
+    prev="/javascript/trexgame/lesson2"
+    next="/javascript/trexgame/lesson4"
+  >
+    {children}
+  </Layout>
+)

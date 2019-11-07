@@ -1,0 +1,54 @@
+import Layout from '../../../components/Layout/MDXLayout'
+
+# JavaScript for Beginners
+
+##### Lesson #2
+
+---
+
+### Table of contents
+
+1. [Setting Up Your Developer Environment](#dev-env)
+2. [Numbers and Math](#numbers)
+
+<h3 id="dev-env">Setting Up Your Developer Environment</h3>
+
+For these lessons, we will be using <a href="https://repl.it">repl.it</a>,
+a powerful and simple _integreated developer environment_ (IDE). Not only
+can we create our files and write some code and run it, but it also gives us neat
+features like auto-complete, code highlighting, and find-replace functions.
+
+<figure>
+  We'll want to start by making an account{' '}
+  <a href="https://repl.it/signup">HERE</a>!
+</figure>
+
+![repl.it signup page](/static/pages/javascript/intro/repl-login-page.png)
+
+<figure>
+  Once you're done, you should be able to see a big blue button at the top of
+  the page to let you create a new project.
+</figure>
+
+![repl.it home page](/static/pages/javascript/intro/repl-home-page.png)
+
+<figure>
+  We'll be creating an <strong>HTML, CSS, JS</strong> project this lesson.
+</figure>
+
+![repl.it create project screen](/static/pages/javascript/intro/repl-create-project.png)
+
+<figure>
+  The code editor automatically creates the HTML, CSS, and JS files that we
+  need, and hooks the all up together for us! Click on the{' '}
+  <strong>script.js</strong> file. Moving forward, we want to mainly work with
+  the JavaScript file.
+</figure>
+
+![repl.it newly created project](/static/pages/javascript/intro/repl-fresh-project.png)
+
+export default ({ children }) => (
+  <Layout prev="/javascript/intro/lesson1" next="/javascript/intro/lesson3">
+    {children}
+  </Layout>
+)

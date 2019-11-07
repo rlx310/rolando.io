@@ -1,0 +1,252 @@
+import Layout from '../../../components/Layout/MDXLayout'
+
+# T-Rex Game
+
+##### Lesson #2
+
+---
+
+### Table of contents
+
+1. [Drawing the Dino](#drawing)
+2. [Drawing the Horizon](#horizon)
+3. [Getting Dino to Jump](#jump)
+
+<h3 id="drawing">Drawing the Dino</h3>
+
+Our first step should be to configure the settings we want for our dino. Width,
+height, position, and color need to be defined for the dino. Lets add the
+following code in our globals section at the top of our file.
+
+```js {5-12}
+// globals
+const canvasWidth = 600
+const canvasHeight = 200
+
+const dino = {
+  x: 40,
+  y: 100,
+  width: 30,
+  height: 50,
+  innerColor: '#999',
+  outerColor: '#fff'
+}
+```
+
+Lets create a new function called **drawDino**, that lets us draw our dinosaur
+onto the screen. We'll want to start by drawing our player as a simple
+ellipse, so we can get our game logic working first, before we worry about
+adding image sprites, animations, or other cosemtics. Write this function
+under both your draw and setup functions.
+
+```js
+function drawDino() {
+  ellipseMode(CORNER)
+  fill(dino.innerColor)
+  stroke(dino.outerColor)
+  strokeWeight(2)
+  ellipse(dino.x, dino.y, dino.width, dino.height)
+}
+```
+
+The [ellipseMode](https://p5js.org/reference/#/p5/ellipseMode) function lets
+us set the origin of our ellipse to its top-left corner, so our _x_ and _y_
+properties map to top-left corner of our player (by default its the center).
+
+The [fill](https://p5js.org/reference/#/p5/fill) function allows us to set the
+inner color, [stroke](https://p5js.org/reference/#/p5/stroke) sets the border
+color, [strokeWeight](https://p5js.org/reference/#/p5/strokeWeight) sets the
+thickness of the border, and
+[ellipse](https://p5js.org/reference/#/p5/ellipse) actually draws our round
+player, using the configuration object we created.
+
+We will also need to update our **draw** function so that it actually draws our dinosaur.
+
+```js {3}
+function draw() {
+  background('#333')
+  drawDino()
+}
+```
+
+At this point your game should look like this:
+
+![Game with dino ellipse](/static/pages/javascript/trexgame/hello-dino.png)
+
+<h3 id="horizon">Drawing the Horizon</h3>
+
+Now that the dino is on our screen, lets move on to drawing our horizon, or
+our floor. Similar to our dino, lets define our horizon in our globals
+section and configure it.
+
+```js
+const horizon = {
+  x: 0,
+  y: canvasHeight - 40,
+  width: canvasWidth,
+  height: 2,
+  color: '#fff'
+}
+```
+
+We want it to span the entire width of our canvas (**canvasWidth**),
+as well as be slighly above the bottom (**canvasHeight**). Remember
+that the y-axis is reveresed when drawing onto computer screens, which
+why we're subtracting 40.
+
+Next, we need to create our **drawHorizon** function at the bottom of
+our file.
+
+```js
+function drawHorizon() {
+  stroke(horizon.color)
+  strokeWeight(horizon.height)
+  line(horizon.x, horizon.y, horizon.x + horizon.width, horizon.y)
+}
+```
+
+And finally, we need to call the **drawHorizon** function in our **draw**.
+
+```js {4}
+function draw() {
+  background('#333')
+  drawDino()
+  drawHorizon()
+}
+```
+
+At this point, our game should look similar to this:
+
+![Game with horizon line](/static/pages/javascript/trexgame/hello-horizon.png)
+
+<h3 id="jump">Getting Dino to Jump</h3>
+
+We now have enough to actually program our dino to jump! The first thing we'll
+want to do is apply a constant downward force to our dino so that it's always
+moving towards the ground. This requires that we add a few more properties
+to our dino.
+
+```js {8-10}
+const dino = {
+  x: 40,
+  y: 100,
+  width: 30,
+  height: 50,
+  innerColor: '#999',
+  outerColor: '#fff',
+  yVelocity: 0,
+  gravity: 0.8,
+  onGround: false
+}
+```
+
+We'll use the **gravity** property to apply a persistent downward force to our
+dino. Once we hit the ground, we don't want to keep moving, so we want
+to make our vertical speed (**yVelocity**) a separate property, as well as
+use **onGround** so our game can keep track of when the dino is already
+touching the floor. We only want to jump when the dino is touching the ground.
+
+Lets now update our **drawDino** function so that it applies our gravity.
+
+```js {2-3}
+function drawDino() {
+  dino.yVelocity += dino.gravity
+  dino.y += dino.yVelocity
+
+  ellipseMode(CORNER)
+  fill(dino.innerColor)
+  stroke(dino.outerColor)
+  strokeWeight(2)
+  ellipse(dino.x, dino.y, dino.width, dino.height)
+}
+```
+
+![Dino falling downwards](/static/pages/javascript/trexgame/dino-falling.gif)
+
+Looks like we're going downwards now, but we're not stopping!
+We haven't told our dino to stop moving when he hits the horizon.
+Lets add that logic to our **drawDino** function.
+
+```js {2-12}
+function drawDino() {
+  const bottom = dino.y + dino.height
+  const nextBottom = bottom + dino.yVelocity
+
+  if (nextBottom >= horizon.y) {
+    dino.yVelocity = 0
+    dino.y = horizon.y - dino.height
+    dino.onGround = true
+  } else if (horizon.y - bottom > 1) {
+    dino.yVelocity += dino.gravity
+    dino.onGround = false
+  }
+
+  dino.y += dino.yVelocity
+
+  ellipseMode(CORNER)
+  fill(dino.innerColor)
+  stroke(dino.outerColor)
+  strokeWeight(2)
+  ellipse(dino.x, dino.y, dino.width, dino.height)
+}
+```
+
+In the code above, we first calculate where the bottom of our dino is,
+and where our dino is going to be in the next frame of our game. When
+our dino hits the horizon, we set **yVelocity** to zero and no longer
+apply our gravity, which stops the dino from moving. But if we haven't
+hit the horizon yet, we continue to apply gravity.
+
+The movement for our dino is almost complete, we now need to tell the
+dino how to jump. So let us go back to our dino object and teach it
+to jump!
+
+```js {12-14}
+const dino = {
+  x: 40,
+  y: 100,
+  width: 30,
+  height: 50,
+  innerColor: '#999',
+  outerColor: '#fff',
+  yVelocity: 0,
+  gravity: 0.8,
+  onGround: false,
+
+  jump() {
+    this.yVelocity = -12
+  }
+}
+```
+
+When the **jump** function is triggered, we should be able to make our
+dino move up. However, we don't have a way to tell the dino to jump yet, so
+lets add the [keyPressed](https://p5js.org/reference/#/p5/keyPressed) function
+under our **draw** function. This function is automatically called by p5.js
+whenever we press any key on our keyboard.
+
+```js
+function keyPressed() {
+  if ((keyCode === 38 || keyCode === 32) && dino.onGround) {
+    dino.jump()
+  }
+}
+```
+
+The **keyCode 38** maps to the **Up Arrow** on your keyboard, and the
+**keyCode 32** maps to the **spacebar**. Feel free to go [HERE](http://keycode.info/)
+and start typing to see what the other keycodes are.
+
+![Dino jumping](/static/pages/javascript/trexgame/dino-jumping.gif)
+
+And just like that, you now have a jumping character! In the next lesson, we'll go
+over how to add the obstacles we want to jump over.
+
+export default ({ children }) => (
+  <Layout
+    prev="/javascript/trexgame/lesson1"
+    next="/javascript/trexgame/lesson3"
+  >
+    {children}
+  </Layout>
+)
