@@ -41,7 +41,8 @@ export const NavDesktopWrapper = styled.nav`
   align-items: stretch;
   text-align: center;
 
-  a:hover {
+  a:hover,
+  a.active {
     color: #fff;
   }
 
@@ -70,11 +71,13 @@ export const NavDesktopWrapper = styled.nav`
     transition: opacity 0.3s;
   }
 
-  a:hover::after {
+  a:hover::after,
+  a.active::after {
     opacity: 0.15;
   }
 
-  a:hover::before {
+  a:hover::before,
+  a.active::before {
     bottom: 0px;
   }
 

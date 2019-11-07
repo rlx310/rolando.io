@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import NavLogo from './NavLogo'
 
@@ -7,17 +8,22 @@ const NavLinks = () => {
   return (
     <>
       <NavLogo />
-      {links.map(({ key, href, label, absolute }) =>
-        absolute ? (
-          <a href={href} key={key} className="nav-link">
-            {label}
-          </a>
-        ) : (
+      {links.map(({ key, href, label, absolute }) => {
+        if (absolute)
+          return (
+            <a href={href} key={key} className="nav-link">
+              {label}
+            </a>
+          )
+
+        const currentPath = useRouter().pathname
+        let className = currentPath === href ? 'active' : ''
+        return (
           <Link href={href} key={key}>
-            <a className="nav-link">{label}</a>
+            <a className={className}>{label}</a>
           </Link>
         )
-      )}
+      })}
     </>
   )
 }
