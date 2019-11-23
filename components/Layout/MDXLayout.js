@@ -6,10 +6,10 @@ import mdComponents from '../MDX/components'
 import Footer from '../MDX/Footer'
 import Nav from '../Nav'
 
-const MDXLayout = ({ children, prev, next }) => {
+const MDXLayout = ({ children, prev, next, noNav }) => {
   return (
     <MDXProvider components={mdComponents}>
-      <Nav />
+      {!noNav && <Nav />}
       <LayoutWrapper>
         {children}
         <Footer prev={prev} next={next} />
@@ -22,7 +22,7 @@ const LayoutWrapper = styled.div`
   max-width: 720px;
   margin: auto;
   padding: 0 20px;
-  padding-top: ${({ theme }) => theme.navHeight + 30}px;
+  padding-top: 20px;
   padding-bottom: 40px;
 
   hr {
@@ -48,6 +48,12 @@ const LayoutWrapper = styled.div`
     border-left: 2px solid black;
     margin: 40px 0;
     padding-left: 16px;
+  }
+
+  h1,
+  h4,
+  h5 {
+    margin: 10px 0;
   }
 
   a {
