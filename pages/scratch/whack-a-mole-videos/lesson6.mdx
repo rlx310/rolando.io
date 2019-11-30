@@ -1,22 +1,13 @@
-import Layout from '../../../components/Layout/MDXLayout'
-import YouTubeEmbed from '../../../components/YouTubeEmbed'
-
-# Whack-a-mole
-
-##### Lesson #6
-
-#### Challenge: Create Variable
-
----
-
-<YouTubeEmbed videoId="OB5q2UAQ3dY" />
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
 
 export default ({ children }) => (
-  <Layout
-    noNav
-    prev="/scratch/whack-a-mole-videos/lesson5"
-    next="/scratch/whack-a-mole-videos/lesson7"
-  >
-    {children}
-  </Layout>
+  <YouTubeLayout
+    courseName="Whack-A-Mole"
+    lessonName="Create Variable"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="OB5q2UAQ3dY"
+  />
 )

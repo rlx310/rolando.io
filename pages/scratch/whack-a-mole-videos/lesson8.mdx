@@ -1,22 +1,13 @@
-import Layout from '../../../components/Layout/MDXLayout'
-import YouTubeEmbed from '../../../components/YouTubeEmbed'
-
-# Whack-a-mole
-
-##### Lesson #8
-
-#### Challenge: Hide Sprite
-
----
-
-<YouTubeEmbed videoId="-_zVp_QvUzo" />
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
 
 export default ({ children }) => (
-  <Layout
-    noNav
-    prev="/scratch/whack-a-mole-videos/lesson7"
-    next="/scratch/whack-a-mole-videos/lesson9"
-  >
-    {children}
-  </Layout>
+  <YouTubeLayout
+    courseName="Whack-A-Mole"
+    lessonName="Hide Sprite"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="-_zVp_QvUzo"
+  />
 )

@@ -1,22 +1,13 @@
-import Layout from '../../../components/Layout/MDXLayout'
-import YouTubeEmbed from '../../../components/YouTubeEmbed'
-
-# Whack-a-mole
-
-##### Lesson #5
-
-#### Challenge: Sound Library
-
----
-
-<YouTubeEmbed videoId="Q3swkGTQLSc" />
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
 
 export default ({ children }) => (
-  <Layout
-    noNav
-    prev="/scratch/whack-a-mole-videos/lesson4"
-    next="/scratch/whack-a-mole-videos/lesson6"
-  >
-    {children}
-  </Layout>
+  <YouTubeLayout
+    courseName="Whack-A-Mole"
+    lessonName="Sound Library"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="Q3swkGTQLSc"
+  />
 )

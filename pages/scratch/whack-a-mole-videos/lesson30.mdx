@@ -4,9 +4,11 @@ import { useRouter } from 'next/router'
 export default ({ children }) => (
   <YouTubeLayout
     courseName="Whack-A-Mole"
-    lessonName="Intro"
+    lessonName="Wrap Up!"
     path={useRouter().pathname}
-    showNext
-    videoId="Os0Yj3f8YRc"
-  />
+    showPrev
+    videoId="mp36CudvJNU"
+  >
+    {children}
+  </YouTubeLayout>
 )
