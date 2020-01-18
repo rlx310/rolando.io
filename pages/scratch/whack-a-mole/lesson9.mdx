@@ -1,23 +1,13 @@
-import Layout from '../../../components/Layout/MDXLayout'
-
-# Whack-a-Mole
-
-##### Lesson #9
-
-#### Create a Variable
-
----
-
-Our game needs to be able to save our score. Lets create a new variable to save our score!
-
-![Adding a new sprite](/static/pages/scratch/whack-a-mole/lesson9.gif)
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
 
 export default ({ children }) => (
-  <Layout
-    noNav
-    prev="/scratch/whack-a-mole/lesson8"
-    next="/scratch/whack-a-mole/lesson10"
-  >
-    {children}
-  </Layout>
+  <YouTubeLayout
+    courseName="Whack-A-Mole"
+    lessonName="Wait Block"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="TWcGH9U8KB8"
+  />
 )

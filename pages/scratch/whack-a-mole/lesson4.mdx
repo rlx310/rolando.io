@@ -1,25 +1,13 @@
-import Layout from '../../../components/Layout/MDXLayout'
-
-# Whack-a-Mole
-
-##### Lesson #4
-
-#### Adding New Sprite
-
----
-
-Now we need a new character!
-Click the sprite icon on the bottom right and pick a new character to match
-your backdrop!
-
-![Adding a new sprite](/static/pages/scratch/whack-a-mole/lesson4.gif)
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
 
 export default ({ children }) => (
-  <Layout
-    noNav
-    prev="/scratch/whack-a-mole/lesson3"
-    next="/scratch/whack-a-mole/lesson5"
-  >
-    {children}
-  </Layout>
+  <YouTubeLayout
+    courseName="Whack-A-Mole"
+    lessonName="Add Sound"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="Bi9AmyI4gRc"
+  />
 )

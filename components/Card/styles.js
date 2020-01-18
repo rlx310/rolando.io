@@ -6,7 +6,6 @@ export const CardWrapper = styled.div`
   border-radius: 0.25rem;
   margin: 0 1rem 2rem;
   overflow: hidden;
-
   transition: transform 0.3s;
 
   &:hover {

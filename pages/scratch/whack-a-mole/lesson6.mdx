@@ -1,24 +1,13 @@
-import Layout from '../../../components/Layout/MDXLayout'
-
-# Whack-a-Mole
-
-##### Lesson #6
-
-#### Adding Sound
-
----
-
-Lets have our sprite play some sound when we click it! Grab a "start sound" block
-and connect it to "when this sprite clicked"
-
-![Adding a new sprite](/static/pages/scratch/whack-a-mole/lesson6.gif)
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
 
 export default ({ children }) => (
-  <Layout
-    noNav
-    prev="/scratch/whack-a-mole/lesson5"
-    next="/scratch/whack-a-mole/lesson7"
-  >
-    {children}
-  </Layout>
+  <YouTubeLayout
+    courseName="Whack-A-Mole"
+    lessonName="Create Variable"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="OB5q2UAQ3dY"
+  />
 )
