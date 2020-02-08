@@ -1,0 +1,13 @@
+import YouTubeLayout from '../../../components/Layout/YouTubeLayout'
+import { useRouter } from 'next/router'
+
+export default ({ children }) => (
+  <YouTubeLayout
+    courseName="Scary Maze"
+    lessonName="Create Sprite"
+    path={useRouter().pathname}
+    showPrev
+    showNext
+    videoId="e5O5bYp2uZY"
+  />
+)
