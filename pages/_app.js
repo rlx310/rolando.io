@@ -1,6 +1,6 @@
 import React from 'react'
 import App from 'next/app'
-import Head from 'next/Head'
+import Head from 'next/head'
 import { ThemeProvider } from 'styled-components'
 
 import theme from '../components/styles/theme'
