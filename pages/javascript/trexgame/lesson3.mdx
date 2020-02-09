@@ -9,14 +9,14 @@ import Layout from '../../../components/Layout/MDXLayout'
 ### Table of contents
 
 1. [Obstacles Class](#class)
-2. [Spawining Multiple Obstacles](#multiple)
+2. [Spawning Multiple Obstacles](#multiple)
 3. [GameOver](#gameover)
 
 <h3 id="class">Obstacles Class</h3>
 
 We were able to get away with using plain objects for our dino and our horizon
 because only one of them exist at a time. But we need to be able to generate
-mulitiple obstacles. We'll be using **classes** in JavaScript to create a
+multiple obstacles. We'll be using **classes** in JavaScript to create a
 template for our obstacles. Write this near your globals, ideally under your
 dino object.
 
@@ -36,7 +36,7 @@ class Obstacle {
 
 Like our dino, we'll want it to line up with the horizon. We also want to
 be able to customize the width, height, and color to be able to create
-differnt types of obstacles later on.
+different types of obstacles later on.
 
 Now we need to be able to draw our obstacle
 onto our screen, so lets add a **draw** method directly to our class.
@@ -62,7 +62,7 @@ class Obstacle {
 }
 ```
 
-This is honeslty much more organized than our other objects, since
+This is honestly much more organized than our other objects, since
 we're encapsulating the functionality of our obstacles in our class
 as well. Feel free to update you game so that your **drawDino**
 and **drawHorizon** are also saved as methods for our
@@ -149,9 +149,9 @@ function draw() {
 
 ![Game with moving obstacle](/static/pages/javascript/trexgame/moving-obstacle.gif)
 
-<h3 id="multuiple">Multuple Obstacles</h3>
+<h3 id="multiple">Multiple Obstacles</h3>
 
-We have one obstacle spawning, now lets make it so that mupltiple spawn! Lets populate
+We have one obstacle spawning, now lets make it so that multiple spawn! Lets populate
 our obstacle array with a few more obstacles.
 
 ```js {3}
@@ -188,7 +188,7 @@ and draw them, except it loops backwards. This is because our new obstacles
 are getting added to the end of the array, and get removed from the beginning
 of the array. During a frame that removes an obstacle, if we looped from the
 beginning, we would end up skipping one of our obstacles for one frame, which
-is a subtle but noticable glitch.
+is a subtle but noticeable glitch.
 
 Now we need to update our draw function to actually use **handleObstacles**
 
@@ -201,7 +201,7 @@ function draw() {
 }
 ```
 
-Multuple obstacles should be spawning now. This is great. Lets take it further
+Multiple obstacles should be spawning now. This is great. Lets take it further
 by dynamically spawning more obstacles. Lets start by making the **createObstacles**
 function, which will create a new obstacle and add it to our list of obstacles.
 We'll also need to create a function that periodically spawns a new obstacle. Lets
@@ -226,14 +226,14 @@ function handleLevel(frameCount) {
 
 In the **handleLevel** function, we set a timing interval that correlates to how many
 frames we want to occur before we to try spawning a new obstacle. In the code above,
-we set it so that our obstales spawn every 45 frames. Since our games will most likely
+we set it so that our obstacles spawn every 45 frames. Since our games will most likely
 run at 60 frames per second, our obstacles will spawn every 0.75 seconds.
 
 **SmoothRandom** generates a random number between 0 and 1 (so a decimal), similar to how JavaScript
 normally handles random numbers, except it uses the **noise** function. Noise limits
 how far random numbers are from each other, causing a smoother and more natural transition
 between random numbers. It makes it so that our game will spawn our obstacles in bursts, as
-opossed to abritrarily.
+opposed to arbitrarily.
 
 We check our random number against our **frequency** which we should set with our globals.
 Frequency lets us set a threshold between 0 and 1 that decides whether or not our new

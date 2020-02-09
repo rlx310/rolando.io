@@ -15,8 +15,8 @@ const ScratchHomePage = () => {
         <h3>Whack-a-Mole</h3>
         <p>
           Build and customize your own version of this classic arcade game!
-          (Disclamer: No animals were actually hurt during the creation of these
-          lessons).
+          (Disclaimer: No animals were actually hurt during the creation of
+          these lessons).
         </p>
       </Card>
       <Card href={getFullHref('stamp-art/lesson1')} horizontal>
@@ -25,6 +25,14 @@ const ScratchHomePage = () => {
         <p>
           Play around with sprites and events to make some pretty neat pieces of
           art!
+        </p>
+      </Card>
+      <Card href={getFullHref('scary-maze/lesson1')} horizontal>
+        <h5>Project #3</h5>
+        <h3>Scary Maze</h3>
+        <p>
+          Design your own maze, and add a little surprise at the end 😉. (Note:
+          Your maze does not have to actually be scary).
         </p>
       </Card>
     </CourseLayout>

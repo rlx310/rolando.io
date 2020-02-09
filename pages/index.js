@@ -18,7 +18,7 @@ const Home = () => (
     <Container style={{ marginTop: '-40px' }}>
       <Row>
         <Card src="/static/assets/js-intro.svg" href="/javascript/intro">
-          <h3>JavaScrtipt Intro</h3>
+          <h3>JavaScript Intro</h3>
           <p>
             JavaScript lets you turn a web page into a full blown application!
             Build software, games, and full-blown media platforms! Learn the

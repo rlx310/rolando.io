@@ -1,5 +1,6 @@
 import React from 'react'
 import App from 'next/app'
+import Head from 'next/Head'
 import { ThemeProvider } from 'styled-components'
 
 import theme from '../components/styles/theme'
@@ -11,6 +12,9 @@ export default class NextApp extends App {
     return (
       <ThemeProvider theme={theme}>
         <>
+          <Head>
+            <title>ByteSized Coding</title>
+          </Head>
           <GlobalStyles />
           <Component {...pageProps} />
         </>

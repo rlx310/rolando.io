@@ -27,7 +27,7 @@ const JSIntroHomePage = () => {
           <h5>Lesson #2</h5>
           <h3>Numbers</h3>
           <p>
-            Numbers are essential for working with JavaScript! Learn how to do
+            Numbers are essential to working with JavaScript! Learn how to do
             common math operations as well as some new ones.
           </p>
         </Card>
