@@ -35,6 +35,13 @@ const ScratchHomePage = () => {
           Your maze does not have to actually be scary).
         </p>
       </Card>
+      <Card href={getFullHref('pong/lesson1')} horizontal>
+        <h5>Project #4</h5>
+        <h3>Pong</h3>
+        <p>
+          Learn how to make this classic game from Scratch... on Scratch! 😹
+        </p>
+      </Card>
     </CourseLayout>
   )
 }
